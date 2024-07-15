@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora CSRF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora CSRF</h1>
+    <div class="form-group">
+        <label for="baseCalculo">Base Cálculo CSRF (R$):</label>
+        <input type="text" id="baseCalculo" value="575.16" oninput="calcular()">
+    </div>
+    <div class="form-group">
+        <label for="percentualRetencao">Percentual Retenção CSRF (%):</label>
+        <input type="text" id="percentualRetencao" value="4.65" oninput="calcular()">
+    </div>
+    <div class="form-group">
+        <label for="percentualRetencaoPIS">Percentual Retenção PIS (%):</label>
+        <input type="text" id="percentualRetencaoPIS" value="0.65" oninput="calcular()">
+    </div>
+    <div class="form-group">
+        <label for="percentualRetencaoCOFINS">Percentual Retenção COFINS (%):</label>
+        <input type="text" id="percentualRetencaoCOFINS" value="3.00" oninput="calcular()">
+    </div>
+    <div class="form-group">
+        <label for="percentualRetencaoCSLL">Percentual Retenção CSLL (%):</label>
+        <input type="text" id="percentualRetencaoCSLL" value="1.00" oninput="calcular()">
+    </div>
+    <div class="result" id="result"></div>
+
+    <script>
+        function calcular() {
+            const baseCalculo = parseFloat(document.getElementById('baseCalculo').value);
+            const percentualRetencao = parseFloat(document.getElementById('percentualRetencao').value);
+            const percentualRetencaoPIS = parseFloat(document.getElementById('percentualRetencaoPIS').value);
+            const percentualRetencaoCOFINS = parseFloat(document.getElementById('percentualRetencaoCOFINS').value);
+            const percentualRetencaoCSLL = parseFloat(document.getElementById('percentualRetencaoCSLL').value);
+
+            const valorRetencaoCSRF = (baseCalculo * percentualRetencao) / 100;
+            const valorRetencaoPIS = (baseCalculo * percentualRetencaoPIS) / 100;
+            const valorRetencaoCOFINS = (baseCalculo * percentualRetencaoCOFINS) / 100;
+            const valorRetencaoCSLL = (baseCalculo * percentualRetencaoCSLL) / 100;
+
+            document.getElementById('result').innerHTML = `
+                <p>Valor Retenção CSRF: R$ ${valorRetencaoCSRF.toFixed(2)}</p>
+                <p>Valor Retenção PIS: R$ ${valorRetencaoPIS.toFixed(2)}</p>
+                <p>Valor Retenção COFINS: R$ ${valorRetencaoCOFINS.toFixed(2)}</p>
+                <p>Valor Retenção CSLL: R$ ${valorRetencaoCSLL.toFixed(2)}</p>
+            `;
+        }
+
+        window.onload = calcular;
+    </script>
+</body>
+</html>
